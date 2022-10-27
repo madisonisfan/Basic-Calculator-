@@ -13,6 +13,8 @@
 		804779752909F17E002110ED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 804779742909F17E002110ED /* Preview Assets.xcassets */; };
 		804779772909F17E002110ED /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804779762909F17E002110ED /* Persistence.swift */; };
 		8047797A2909F17E002110ED /* Calculator_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 804779782909F17E002110ED /* Calculator_iOS.xcdatamodeld */; };
+		804779822909F19D002110ED /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804779812909F19D002110ED /* MainScreen.swift */; };
+		804779852909F4C7002110ED /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804779842909F4C7002110ED /* Buttons.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		804779742909F17E002110ED /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		804779762909F17E002110ED /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		804779792909F17E002110ED /* Calculator_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Calculator_iOS.xcdatamodel; sourceTree = "<group>"; };
+		804779812909F19D002110ED /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
+		804779842909F4C7002110ED /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 		8047796C2909F17C002110ED /* Calculator-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				804779832909F4B9002110ED /* View Modifiers */,
+				804779802909F185002110ED /* Views */,
 				8047796D2909F17C002110ED /* Calculator_iOSApp.swift */,
 				8047796F2909F17C002110ED /* ContentView.swift */,
 				804779712909F17E002110ED /* Assets.xcassets */,
@@ -71,6 +77,22 @@
 				804779742909F17E002110ED /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		804779802909F185002110ED /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				804779812909F19D002110ED /* MainScreen.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		804779832909F4B9002110ED /* View Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				804779842909F4C7002110ED /* Buttons.swift */,
+			);
+			path = "View Modifiers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +167,8 @@
 			files = (
 				804779772909F17E002110ED /* Persistence.swift in Sources */,
 				804779702909F17C002110ED /* ContentView.swift in Sources */,
+				804779822909F19D002110ED /* MainScreen.swift in Sources */,
+				804779852909F4C7002110ED /* Buttons.swift in Sources */,
 				8047796E2909F17C002110ED /* Calculator_iOSApp.swift in Sources */,
 				8047797A2909F17E002110ED /* Calculator_iOS.xcdatamodeld in Sources */,
 			);
