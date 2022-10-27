@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct MainScreen: View {
-    @State var currentNumber = 0
-    @State var viewedNumber = 0
-    @State var firstNumber: Int?
-    @State var secondNumber: Int?
-    @State var operation = ""
+    @State var currentNumber: String = "0"
+    @State var firstNumber: String?
+    @State var secondNumber: String?
+    //@State var firstNumber: Double?
+    //@State var secondNumber: Double?
+    @State var operation: String?
     
     var body: some View {
         
         GeometryReader { metric in
         VStack(spacing: 17){
             Spacer()
-           
+           //String(format: "%g", currentNumber)
             //Text("Width: \(metric.size.width)").foregroundColor(.white)
             HStack{
                Spacer()
@@ -31,28 +32,34 @@ struct MainScreen: View {
             }
             HStack (spacing: 17){
                 Button() {
-                   resetValues()
+                    resetValues()
                 } label : {
-                   
-                    Text("AC").fontWeight(.medium)
+                    
+                    Text("\(firstNumber == nil ? "AC" : "C")").fontWeight(.medium)
                 }.modifier(GrayButton())
                     
 
                 Button() {
+                    posNegPressed()
                 } label : {
-                    Text("+/-")
-                        .fontWeight(.medium)
+                    Image(systemName: "plus.forwardslash.minus")
+                        .font(.system(size: 35))
+                    //Text("+/-")
+                      //  .fontWeight(.medium)
                 }.modifier(GrayButton())
                 
                 
                 Button() {
+                    percentPressed()
                 } label : {
                     Text("%")
                         .fontWeight(.medium)
+                        .font(.system(size: 35))
                 }.modifier(GrayButton())
 
               
                 Button() {
+                    operation = "/"
                 } label : {
                     Image(systemName: "divide")
                     /*Image(systemName: "divide.circle.fill")
@@ -63,7 +70,7 @@ struct MainScreen: View {
                         //.background(.white)
                        // .foregroundColor(.orange)
                   
-                }.modifier(OrangeButton())
+                }.modifier(OrangeButton(pressed: operation == "/" ))
                 
                 
             }.frame(maxWidth: .infinity)
@@ -73,7 +80,8 @@ struct MainScreen: View {
            
             HStack(spacing: 17){
                 Button() {
-                    pressNum(num: 7 )
+                    pressNum(num: 7)
+                    
                 } label : {
                     
                     Text("7").fontWeight(.medium)
@@ -82,6 +90,7 @@ struct MainScreen: View {
                     
 
                 Button() {
+                    pressNum(num: 8)
                 } label : {
                     Text("8")
                         .fontWeight(.medium)
@@ -90,6 +99,7 @@ struct MainScreen: View {
                 
                 
                 Button() {
+                    pressNum(num: 9)
                 } label : {
                     Text("9")
                         .fontWeight(.medium)
@@ -98,10 +108,11 @@ struct MainScreen: View {
              
 
                 Button() {
+                    operation = "x"
                 } label : {
                     Text("x").fontWeight(.medium)
                 }
-                .modifier(OrangeButton())
+                .modifier(OrangeButton(pressed: operation == "x" ))
                 
             }.frame(maxWidth: .infinity)
             
@@ -109,6 +120,7 @@ struct MainScreen: View {
             
             HStack(spacing: 17){
                 Button() {
+                    pressNum(num: 4)
                 } label : {
                     Text("4").fontWeight(.medium)
                 }
@@ -116,6 +128,7 @@ struct MainScreen: View {
                     
 
                 Button() {
+                    pressNum(num: 5)
                 } label : {
                     Text("5")
                         .fontWeight(.medium)
@@ -124,6 +137,7 @@ struct MainScreen: View {
                 
                 
                 Button() {
+                    pressNum(num: 6)
                 } label : {
                     Text("6")
                         .fontWeight(.medium)
@@ -133,22 +147,25 @@ struct MainScreen: View {
              
 
                 Button() {
+                    operation = "-"
                 } label : {
                     Text("-").fontWeight(.medium)
                 }
-                .modifier(OrangeButton())
+                .modifier(OrangeButton(pressed: operation == "-" ))
                 
             }.frame(maxWidth: .infinity)
                 
        
             HStack(spacing: 20){
                 Button() {
+                    pressNum(num: 1)
                 } label : {
                     Text("1").fontWeight(.medium)
                 }
                 .modifier(DarkGrayButton())
 
                 Button() {
+                    pressNum(num: 2)
                 } label : {
                     Text("2")
                         .fontWeight(.medium)
@@ -156,6 +173,7 @@ struct MainScreen: View {
                 .modifier(DarkGrayButton())
                 
                 Button() {
+                    pressNum(num: 3)
                 } label : {
                     Text("3")
                         .fontWeight(.medium)
@@ -167,16 +185,17 @@ struct MainScreen: View {
                 } label : {
                     Text("+").fontWeight(.medium)
                 }
-                .modifier(OrangeButton())
+                .modifier(OrangeButton(pressed: operation == "+" ))
                 
             }.frame(maxWidth: .infinity)
                 
           
             
            
-            HStack(){
+            HStack(spacing: 19){
                 HStack {
                     Button() {
+                        pressNum(num: 0)
                     } label : {
                         Text("0").fontWeight(.medium)
                             .padding(.leading, 30)
@@ -187,11 +206,13 @@ struct MainScreen: View {
                     .cornerRadius(40)
                     .foregroundColor(.white)
                     .font(.system(size: 40))
-                }.frame(width:  metric.size.width * 0.5)
+                }.frame(width:  metric.size.width * 0.48)
+                    //.padding(.trailing, 10)
                
                     
 
                 Button() {
+                    decimalPressed()
                 } label : {
                     Text(".")
                         .fontWeight(.medium)
@@ -206,7 +227,7 @@ struct MainScreen: View {
                 } label : {
                     Text("=").fontWeight(.medium)
                 }
-                .modifier(OrangeButton())
+                .modifier(OrangeButton(pressed: operation == "=" ))
                 
             }.frame(maxWidth: .infinity)
             
@@ -217,38 +238,157 @@ struct MainScreen: View {
     }
     }
     
+    func posNegPressed() {
+        if operation == nil {
+            print("operation is nil")
+            //MEANS WE ARE STILL ON FIRST NUMBER
+            if firstNumber == nil {
+                //NO NUMBER SELECTED YET
+                firstNumber = "-0"
+            } else  {
+                
+                firstNumber = firstNumber!.first! == "-" ? firstNumber?.replacingOccurrences(of: "-", with: "") : "-" + firstNumber!
+            }
+            currentNumber = firstNumber!
+            //currentNumber = String(format: "%g", firstNumber!)
+        } else {
+            //WE ARE ON THE SECOND NUMBER
+            if secondNumber == nil {
+                //NO NUMBER SELECTED YET
+                secondNumber = "0."
+            } else if secondNumber?.last != "." {
+                secondNumber! += "."
+            }
+            
+            currentNumber = secondNumber!
+        }
+    }
+    
+    
+       
+    func percentPressed(){
+        
+        currentNumber = String(format: "%g", Double(currentNumber)! / 100)
+        firstNumber = currentNumber
+    }
+    
+    func decimalPressed(){
+        
+        if operation == nil {
+            print("operation is nil")
+            //MEANS WE ARE STILL ON FIRST NUMBER
+            if firstNumber == nil {
+                //NO NUMBER SELECTED YET
+                firstNumber = "0."
+            } else if firstNumber?.last != "." {
+                
+                firstNumber! += "."
+            }
+            currentNumber = firstNumber!
+            //currentNumber = String(format: "%g", firstNumber!)
+        } else {
+            //WE ARE ON THE SECOND NUMBER
+            if secondNumber == nil {
+                //NO NUMBER SELECTED YET
+                secondNumber = "0."
+            } else if secondNumber?.last != "." {
+                secondNumber! += "."
+            }
+            
+            currentNumber = secondNumber!
+        }
+    }
+    
+    
+    
     func pressNum (num: Int) {
         
-        currentNumber = num
+        if operation == nil {
+            print("operation is nil")
+            //MEANS WE ARE STILL ON FIRST NUMBER
+            if firstNumber == nil {
+                //NO NUMBER SELECTED YET
+                firstNumber = String(num)
+            } else {
+                firstNumber! += String(num)
+            }
+            currentNumber = firstNumber!
+            //currentNumber = String(format: "%g", firstNumber!)
+        } else {
+            //WE ARE ON THE SECOND NUMBER
+            if secondNumber == nil {
+                //NO NUMBER SELECTED YET
+                secondNumber = String(num)
+            } else {
+                secondNumber! += String(num)
+            }
+            
+            currentNumber = secondNumber!
+        }
         
         
+    
+        //currentNumber = num
+        
+        /*
+
         //First check if the first number has been presseed
         if firstNumber == nil {
             firstNumber = num
         } else {
             secondNumber = num
         }
-    
+    */
     }
     
     func pressEqual(){
-        
-        
-        if operation == "+" {
+       
+        switch operation {
+            case "+":
+                print("+")
+                if firstNumber != nil && secondNumber != nil {
+                  
+                    currentNumber = String(format: "%g",Double(firstNumber!)! + Double(secondNumber!)!)
+                }
+            case "-":
+                if firstNumber != nil && secondNumber != nil {
+                    currentNumber = String(format: "%g", Double(firstNumber!)! - Double(secondNumber!)!)
+                }
+            case "/":
+                
+                if firstNumber != nil && secondNumber != nil {
+                    currentNumber = String(format: "%g", Double(firstNumber!)! / Double(secondNumber!)!)
+                }
+            case "x":
+                if firstNumber != nil && secondNumber != nil {
+                    currentNumber = String(format: "%g", Double(firstNumber!)! * Double(secondNumber!)!)
+                }
             
-            if firstNumber != nil && secondNumber != nil {
-                currentNumber = firstNumber! + secondNumber!
-            }
            
+            default:
+                print("unknown operation")
         }
+        
+        
+        setValuesForNewOperation()
+        
+      
     }
     
-    
+    func setValuesForNewOperation(){
+        firstNumber = currentNumber
+        secondNumber = nil
+        operation = nil
+        
+    }
     
     func resetValues() {
-        currentNumber = 0
-        //firstNumber = 0
+       
+        firstNumber = nil
         secondNumber = nil
+        operation = nil
+        currentNumber = "0"
+        
         
     }
 }
