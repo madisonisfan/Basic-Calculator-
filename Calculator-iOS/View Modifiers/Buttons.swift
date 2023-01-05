@@ -40,15 +40,17 @@ struct DarkGrayButton: ViewModifier {
 
 struct OrangeButton: ViewModifier {
     //let width: CGFloat
-    let pressed: Bool
+   // let pressed: Bool
     
     
     func body(content: Content) -> some View {
         content
             .frame(maxWidth: .infinity, maxHeight: 80)
-            .background(pressed ? .white : .orange)
+            //.background(pressed ? .white : .orange)
+            .background(.orange)
             .cornerRadius(40)
-            .foregroundColor(pressed ? .orange : .white)
+            .foregroundColor(.white)
+            //.foregroundColor(pressed ? .orange : .white)
             .font(.system(size: 40))
     }
 }
