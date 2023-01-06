@@ -65,8 +65,7 @@ struct MainScreen: View {
 
                   
                     Button() {
-                       // operation = "/"
-                        //operationArray.append("/")
+                       
                         operationPressed(operation: "/")
                     } label : {
                         Image(systemName: "divide")
@@ -75,41 +74,23 @@ struct MainScreen: View {
                     
                     
                 }.frame(maxWidth: .infinity)
-                       
+         
                 
-                
-               
                 HStack(spacing: 17){
-                    Button() {
-                        pressNum(num: 7)
-                    } label : {
-                        
-                        Text("7").fontWeight(.medium)
+                    ForEach(7...9, id: \.self) { n in
+                        Button() {
+                            pressNum(num: n)
+                        } label : {
+                            
+                            Text("\(n)").fontWeight(.medium)
+                        }
+                        .modifier(DarkGrayButton())
+                            
                     }
-                    .modifier(DarkGrayButton())
-                        
+                
 
                     Button() {
-                        pressNum(num: 8)
-                    } label : {
-                        Text("8")
-                            .fontWeight(.medium)
-                    }
-                    .modifier(DarkGrayButton())
-                    
-                    
-                    Button() {
-                        pressNum(num: 9)
-                    } label : {
-                        Text("9")
-                            .fontWeight(.medium)
-                    }
-                    .modifier(DarkGrayButton())
-                 
-
-                    Button() {
-                        //operation = "x"
-                        //operationArray.append("x")
+                        
                         operationPressed(operation: "x")
                     } label : {
                         Text("x").fontWeight(.medium)
@@ -121,36 +102,17 @@ struct MainScreen: View {
                 
                 
                 HStack(spacing: 17){
-                    Button() {
-                        pressNum(num: 4)
-                    } label : {
-                        Text("4").fontWeight(.medium)
+                    ForEach(4...6, id: \.self) { n in
+                        Button() {
+                            pressNum(num: n)
+                        } label : {
+                            
+                            Text("\(n)").fontWeight(.medium)
+                        }
+                        .modifier(DarkGrayButton())
                     }
-                    .modifier(DarkGrayButton())
-                        
-
+      
                     Button() {
-                        pressNum(num: 5)
-                    } label : {
-                        Text("5")
-                            .fontWeight(.medium)
-                    }
-                    .modifier(DarkGrayButton())
-                    
-                    
-                    Button() {
-                        pressNum(num: 6)
-                    } label : {
-                        Text("6")
-                            .fontWeight(.medium)
-                    }
-                    .modifier(DarkGrayButton())
-                    
-                 
-
-                    Button() {
-                        //operation = "-"
-                        //operationArray.append("-")
                         operationPressed(operation: "-")
                     } label : {
                         Text("-").fontWeight(.medium)
@@ -161,32 +123,18 @@ struct MainScreen: View {
                     
            
                 HStack(spacing: 20){
-                    Button() {
-                        pressNum(num: 1)
-                    } label : {
-                        Text("1").fontWeight(.medium)
-                    }
-                    .modifier(DarkGrayButton())
-
-                    Button() {
-                        pressNum(num: 2)
-                    } label : {
-                        Text("2")
-                            .fontWeight(.medium)
-                    }
-                    .modifier(DarkGrayButton())
                     
-                    Button() {
-                        pressNum(num: 3)
-                    } label : {
-                        Text("3")
-                            .fontWeight(.medium)
+                    ForEach(1...3, id: \.self) { n in
+                        Button() {
+                            pressNum(num: n)
+                        } label : {
+                            
+                            Text("\(n)").fontWeight(.medium)
+                        }
+                        .modifier(DarkGrayButton())
                     }
-                    .modifier(DarkGrayButton())
 
                     Button() {
-                        //operation = "+"
-                        //operationArray.append("+")
                         operationPressed(operation: "+")
                     } label : {
                         Text("+").fontWeight(.medium)
@@ -201,8 +149,6 @@ struct MainScreen: View {
                 HStack(spacing: 19){
                    
                     HStack{
-                        
-
                         Button() {
                             pressNum(num: 0)
                         } label : {
@@ -349,7 +295,7 @@ struct MainScreen: View {
     
     
     func pressEqual(){
-        print("\n EQUAL PRESSED")
+        
        
         
         if currentNumber != nil {
@@ -357,7 +303,6 @@ struct MainScreen: View {
             currentNumber = nil
         }
         
-        print("operationArray after pressing equal", operationArray)
         
         for currentValue in operationArray {
             print("current value", currentValue)
@@ -436,35 +381,8 @@ struct MainScreen: View {
         }
         
         previewedNumber = currentNumber!
-        
-        /*
-        if operationArray.isEmpty || !operations.contains(operationArray.last!) {
-            //MEANS WE ARE STILL ON THE 1ST NUM
-            if firstNumber == nil {
-                //NO NUMBER SELECTED YET
-                firstNumber = String(num)
-            } else {
-                firstNumber! += String(num)
-            }
-            previewedNumber = firstNumber!
-            //operationArray.append(firstNumber!)
-            
-            
-        } else {
-            //ONTO THE 2ND NUM
-            
-            if secondNumber == nil {
-                //NO NUMBER SELECTED YET
-                secondNumber = String(num)
-            } else {
-                secondNumber! += String(num)
-            }
-            previewedNumber = secondNumber!
-            //operationArray.append(secondNumber!)
-        }
-        
-        print("operationArray after pressing num", operationArray)*/
-        
+       
+
         
     }
     
